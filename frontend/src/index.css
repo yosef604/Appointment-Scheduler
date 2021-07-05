@@ -1,0 +1,50 @@
+main {
+  min-height: 80vh;
+}
+
+.home-screen {
+  background: url('./images.jpeg') center center/cover;
+  height: 80vh;
+}
+
+.hoursDisplay {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-columns: repeat(4, 100px);
+}
+
+.btn {
+  border: none;
+  height: 40px;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+}
+
+.un-booked {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.un-booked:hover {
+  background-color: rgb(40, 128, 158);
+}
+
+.un-booked:active {
+  color: tomato;
+  font-size: large;
+}
+
+.booked {
+  background-color: rgb(92, 13, 13);
+  color: whitesmoke;
+}
+
+.booked:hover {
+  color: whitesmoke;
+  background-color: salmon;
+}
+
+.booking-form {
+  display: flex;
+}
