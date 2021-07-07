@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import BookingScreen from './screens/BookingScreen';
 import AdminOrdersScreen from './screens/AdminOrdersScreen';
 import AdminSetHoursScreen from './screens/AdminSetHoursScreen';
+import BookingSuccessScreen from './screens/BookingSuccessScreen';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <Header />
       <Container>
         <main>
-          <Route path='/book' component={BookingScreen} />
+          <Route path='/book/success' component={BookingSuccessScreen} />
+          <Route path='/book' component={BookingScreen} exact />
           <Route path='/login' component={LoginScreen} />
           <Route path='/admin/orders' component={AdminOrdersScreen}/>
           <Route path='/admin/hours' component={AdminSetHoursScreen}/>

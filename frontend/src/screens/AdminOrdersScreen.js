@@ -33,20 +33,20 @@ const AdminOrdersScreen = ({ history }) => {
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>USER</th>
+              <th>NAME</th>
+              <th>PHONE</th>
               <th>DATE</th>
-              <th>Day</th>
+              <th>DAY</th>
               {/* <th>PAID</th>
               <th>DELIVERED</th> */}
-              <th>Hour</th>
+              <th>HOUR</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>{order._id}</td>
                 <td>{order.name}</td>
+                <td>{order.phone}</td>
                 <td>{order.date}</td>
                 <td>{order.day}</td>
                 <td>{order.hour}</td>

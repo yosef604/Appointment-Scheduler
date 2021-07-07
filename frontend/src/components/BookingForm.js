@@ -1,10 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {Form, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { userBookingAction } from '../actions/usersActions'
 import Message from './Message'
+import Loader from './Loader'
 
 
-const UserForm = ({value}) => {
+const UserForm = ({value, history}) => {
+
+  const dispatch = useDispatch()
 
     const [name, setName] = useState('')
     const [hour, setHour] = useState('')
@@ -12,10 +17,12 @@ const UserForm = ({value}) => {
     const [phone, setPhone] = useState('')
     const [day, setDay] = useState('')
     const date = value.format('DD-MM-YYYY')
-    const [bookSuccess, setBookSuccess] = useState(false)
     const [hoursList, setHoursList] = useState([])
     const [showAHours, setShowAHours] = useState(false)
     const [message, setMessage] = useState(null)
+
+    const userBooking = useSelector(state => state.userBooking)
+    const {loading, error, success:bookSuccess} = userBooking
 
     useEffect(() => {
 
@@ -24,11 +31,15 @@ const UserForm = ({value}) => {
         setHoursList(data)
         setHour(data[0])
         setDay(value.format('dddd'))
-    }
+     }
 
-    fetchHours()
+     fetchHours()
+
+     if (bookSuccess){
+      history.push('/book/success')
+     }
        
-    }, [bookSuccess, value])
+    }, [bookSuccess, value, history])
 
     
 
@@ -45,9 +56,7 @@ const UserForm = ({value}) => {
           const userInfo = {
             name, hour, count, phone, date, day
         }
-          await axios.post('/api/orders/neworder', userInfo)
-          setBookSuccess(true)
-          setBookSuccess(false)
+          dispatch(userBookingAction(userInfo))
           setShowAHours(false)
           setMessage(null)
         }
@@ -58,65 +67,66 @@ const UserForm = ({value}) => {
 
     return (
         <div className='booking-form'>
+          {loading && <Loader />}
+          {error && <Message variant='danger'>{error}</Message>}
           {message && <Message variant='danger'>{message}</Message>}
-          {/* {bookSuccess && <Message variant='success'>Your bokking succeed</Message>} */}
             <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='name'>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group>
-              <Button onClick={() => setShowAHours(true)}>Choose Hour</Button>
-            </Form.Group>
+              <Form.Group>
+                <Button onClick={() => setShowAHours(true)}>Choose Hour</Button>
+              </Form.Group>
 
-            <Form.Group controlId='hour'>
-              <h3>hour</h3>
-              <p>Hour: {hour}</p>
-            </Form.Group>
+              <Form.Group controlId='hour'>
+                <h3>hour</h3>
+                <p>Hour: {hour}</p>
+              </Form.Group>
 
-            <Form.Group controlId='day'>
-              <h3>day</h3>
-              <p>day: {day}</p>
-            </Form.Group>
+              <Form.Group controlId='day'>
+                <h3>day</h3>
+                <p>day: {day}</p>
+              </Form.Group>
 
-            <Form.Group controlId='count'>
-              <Form.Label>count</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter count'
-                value={count}
-                onChange={(e) => setCount(e.target.value)}
-                required
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='count'>
+                <Form.Label>count</Form.Label>
+                <Form.Control
+                  type='number'
+                  placeholder='Enter count'
+                  value={count}
+                  onChange={(e) => setCount(e.target.value)}
+                  required
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='date'>
-              <h3>date</h3>
-              <span><p>{date}</p></span>
-            </Form.Group>
+              <Form.Group controlId='date'>
+                <h3>date</h3>
+                <span><p>{date}</p></span>
+              </Form.Group>
 
-            <Form.Group controlId='phone'>
-              <Form.Label>phone</Form.Label>
-              <Form.Control
-                type='tel'
-                placeholder='phone'
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='phone'>
+                <Form.Label>phone</Form.Label>
+                <Form.Control
+                  type='tel'
+                  placeholder='phone'
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                ></Form.Control>
+              </Form.Group>
 
-            <Button type='submit' variant='primary'>
-              Submit
-            </Button>
-          </Form>
+              <Button type='submit' variant='primary'>
+                Submit
+              </Button>
+            </Form>
 
          {showAHours && (
            <div className='hoursDisplay'>

@@ -1,13 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools }from 'redux-devtools-extension'
-import { userLoginReducer } from "./reducers/userReducers";
+import { userBookingReducer, userLoginReducer } from "./reducers/userReducers";
 import { adminGetOrdersReducer, adminSetHoursReducer } from "./reducers/adminReducers";
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     adminGetOrders: adminGetOrdersReducer,
-    adminSetHours: adminSetHoursReducer
+    adminSetHours: adminSetHoursReducer,
+    userBooking: userBookingReducer
 })
 
 // const cartItemsFromStorage = localStorage.getItem('cartItems') ? 

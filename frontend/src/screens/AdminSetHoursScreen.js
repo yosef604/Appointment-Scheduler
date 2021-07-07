@@ -19,7 +19,7 @@ const AdminSetHoursScreen = ({history, location }) => {
     const {userInfo} = userLogin
 
     const adminSetHours = useSelector(state => state.adminSetHours)
-    const {error, loading, success} = adminSetHours
+    const {loading, success, error} = adminSetHours
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
@@ -28,7 +28,7 @@ const AdminSetHoursScreen = ({history, location }) => {
         history.push(redirect)
       } 
       if (success){
-        console.log('success')
+        history.push('/')
       }
     }, [history, userInfo, redirect, success])
 

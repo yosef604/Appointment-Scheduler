@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/userConsts'
+import { USER_BOOKING_FAIL, USER_BOOKING_REQUEST, USER_BOOKING_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/userConsts'
 
 export const userLoginAction = (email, password) => async (dispatch) => {
 
@@ -39,4 +39,28 @@ export const userLogoutAction = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({type: USER_LOGOUT})
   // dispatch({type: MY_ORDERS_RESET})
+}
+
+export const userBookingAction = (userInfo) => async (dispatch) => {
+
+  try {
+    dispatch({
+      type: USER_BOOKING_REQUEST
+    })
+        
+    await axios.post('/api/orders/neworder', userInfo)
+
+    dispatch({
+      type: USER_BOOKING_SUCCESS
+    })
+
+  } catch (error) {
+       dispatch({
+      type: USER_BOOKING_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
 }

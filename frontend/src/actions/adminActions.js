@@ -59,7 +59,6 @@ export const adminSetHoursAction = (date, startDay, endDay, token) => async (dis
 
       dispatch({
         type: ADMIN_SET_HOURS_SUCCESS,
-        success: true
       })
 
     } catch (error) {

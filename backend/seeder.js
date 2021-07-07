@@ -19,7 +19,7 @@ const importData = async () => {
     await User.deleteMany()
     await AvailableHours.deleteMany()
 
-    const hours = timeSelection(0, 24)
+    const hours = timeSelection(10, 17)
 
     await User.insertMany(users)
     await Hour.insertMany(hours)
